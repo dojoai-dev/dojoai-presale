@@ -43,7 +43,7 @@
       padding: 10px;
       border-radius: 8px;
       margin: 10px 0;
-      word-break: break-word;
+      word-break: break-all;
     }
     .qr-code {
       margin-top: 10px;
@@ -57,7 +57,7 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      margin: 5px;
+      margin-top: 10px;
     }
     input {
       padding: 10px;
@@ -106,25 +106,28 @@
     a {
       color: #00ffc3;
     }
+    .balance-display, .token-claim {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #0f0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>👋 Welcome to DojoAI Presale</h1>
-
     <div class="login-register">
       <h3>Login or Create Your Account to Continue</h3>
-      <input type="text" placeholder="Username" /><br />
-      <input type="password" placeholder="Password" /><br />
-      <button>Register</button>
-      <button>Login</button>
+      <input type="text" id="username" placeholder="Username" /><br />
+      <input type="password" id="password" placeholder="Password" /><br />
+      <button onclick="login()">Login</button>
+      <button onclick="register()">Register</button>
     </div>
 
     <div class="container" id="mainContent" style="display: none;">
       <h1>🚀 DojoAI 2.0 Presale</h1>
-
       <div id="description">
-        DojoAI 2.0 is a revolutionary AI project integrating decentralized trading algorithms with blockchain automation. This presale offers early access to our native token before official exchange listings. All funds raised will go toward protocol development, strategic partnerships, and token liquidity. Investors will receive tokens after presale closure on August 1st. Don’t miss your chance to join the next-gen AI revolution.
+        DojoAI 2.0 is a revolutionary AI project integrating decentralized trading algorithms with blockchain automation. This presale offers early access to our native token before official exchange listings. All funds raised go toward protocol development, strategic partnerships, and liquidity. Token claims will be available after the presale ends on August 1st based on BNB contributed.
       </div>
 
       <div id="countdown">Countdown Loading...</div>
@@ -137,15 +140,24 @@
         </div>
       </div>
 
+      <div class="balance-display">
+        Your Contribution: <span id="userBNB">0.000</span> BNB<br />
+        Estimated Token Allocation: <span id="userDOJO">0</span> DOJO
+      </div>
+
       <div class="investors" id="investorList"></div>
 
       <div class="join-section">
         <h3>Ready to Join?</h3>
-        <p>To participate in the presale and receive tokens, users must send BNB to the wallet below. Token distribution will be automatic after presale ends.</p>
+        <p>Send BNB to the wallet below. Token claims will be unlocked on August 1st based on your BNB sent.</p>
         <div class="wallet-address" id="walletAddress">0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918</div>
         <img src="dojoai_bnb_qr.png" alt="BNB QR Code" class="qr-code" />
         <button onclick="copyWallet()">📋 Copy Address</button>
         <button onclick="connectAndSend()">🔌 Send BNB with MetaMask</button>
+      </div>
+
+      <div class="token-claim">
+        <button disabled>Claim DOJO Tokens (Opens Aug 1)</button>
       </div>
 
       <div class="contact">
@@ -164,6 +176,8 @@
     const investorList = document.getElementById("investorList");
     const progressBar = document.getElementById("progressBar");
     const raisedDisplay = document.getElementById("fakeRaised");
+    const userBNB = document.getElementById("userBNB");
+    const userDOJO = document.getElementById("userDOJO");
 
     const targetDate = new Date("2025-08-01T00:00:00Z").getTime();
 
@@ -183,9 +197,7 @@
 
     async function fetchRaised() {
       const res = await fetch(ENDPOINT + "/latest", {
-        headers: {
-          'X-Master-Key': API_KEY
-        }
+        headers: { 'X-Master-Key': API_KEY }
       });
       const data = await res.json();
       return parseFloat(data.record.raised || 0);
@@ -225,6 +237,9 @@
               value: "0x2386F26FC10000"
             }]
           });
+          const userAmount = parseFloat(localStorage.getItem("contribution") || 0) + 0.01;
+          localStorage.setItem("contribution", userAmount);
+          updateUserStats(userAmount);
           alert("Transaction sent: " + tx);
         } catch (err) {
           alert("Error: " + err.message);
@@ -232,6 +247,11 @@
       } else {
         alert("MetaMask not detected.");
       }
+    }
+
+    function updateUserStats(bnb) {
+      userBNB.innerText = bnb.toFixed(3);
+      userDOJO.innerText = Math.floor(bnb * 1000);
     }
 
     async function randomInvestor() {
@@ -242,25 +262,37 @@
       if (raised > 200) raised = 200;
       await updateRaised(raised);
       updateProgressUI(raised);
-
       const entry = document.createElement("div");
       entry.textContent = `${amount} BNB from ${address}`;
       investorList.prepend(entry);
     }
 
+    function login() {
+      const u = document.getElementById("username").value;
+      const p = document.getElementById("password").value;
+      const users = JSON.parse(localStorage.getItem("users") || "{}");
+      if (!users[u]) return alert("❌ Username not found.");
+      if (users[u] !== p) return alert("🔐 Incorrect password.");
+      document.querySelector(".login-register").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      const contribution = parseFloat(localStorage.getItem("contribution") || 0);
+      updateUserStats(contribution);
+    }
+
+    function register() {
+      const u = document.getElementById("username").value;
+      const p = document.getElementById("password").value;
+      const users = JSON.parse(localStorage.getItem("users") || "{}");
+      if (users[u]) return alert("⚠️ Username already exists.");
+      users[u] = p;
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("✅ Registration successful. You may now log in.");
+    }
+
     updateCountdown();
     setInterval(updateCountdown, 1000);
     fetchRaised().then(updateProgressUI);
-
-    // Load presale content only after dummy login
-    document.querySelector(".login-register button:last-of-type").addEventListener("click", () => {
-      document.querySelector(".login-register").style.display = "none";
-      document.getElementById("mainContent").style.display = "block";
-    });
-
-    // Update fake investor every 90 seconds
     setInterval(randomInvestor, 90000);
   </script>
 </body>
 </html>
-
