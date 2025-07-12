@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DojoAI 2.0 Presale</title>
+  <title>Welcome to DojoAI Presale</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -35,7 +35,7 @@
       font-size: 24px;
       margin: 20px 0;
     }
-    .wallet-section {
+    .wallet-section, .login-register {
       margin-top: 30px;
     }
     .wallet-address {
@@ -58,6 +58,13 @@
       border-radius: 6px;
       cursor: pointer;
       margin-top: 10px;
+    }
+    input {
+      padding: 10px;
+      width: 90%;
+      border: none;
+      margin: 5px 0;
+      border-radius: 6px;
     }
     .stats {
       margin-top: 30px;
@@ -88,65 +95,79 @@
       padding: 10px;
       border-radius: 8px;
     }
+    .join-section {
+      margin-top: 30px;
+    }
     .contact {
       margin-top: 30px;
       font-size: 15px;
       color: #aaa;
     }
+    a {
+      color: #00ffc3;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🚀 DojoAI 2.0 Presale</h1>
+    <h1>👋 Welcome to DojoAI Presale</h1>
 
-    <div id="description">
-      DojoAI 2.0 is a revolutionary AI project integrating decentralized trading algorithms with blockchain automation. This presale offers early access to our native token before official exchange listings. All funds raised will go toward protocol development, strategic partnerships, and token liquidity. Investors will receive tokens after presale closure on August 1st. Don’t miss your chance to join the next-gen AI revolution.
+    <div class="login-register">
+      <h3>Login or Create Your Account to Continue</h3>
+      <input type="text" placeholder="Username" /><br />
+      <input type="password" placeholder="Password" /><br />
+      <button>Register</button>
+      <button>Login</button>
     </div>
 
-    <div id="countdown">Countdown Loading...</div>
+    <div class="container" id="mainContent" style="display: none;">
+      <h1>🚀 DojoAI 2.0 Presale</h1>
 
-    <div class="wallet-section">
-      <h3>Send BNB to Join</h3>
-      <div class="wallet-address" id="walletAddress">0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918</div>
-      <img src="dojoai_bnb_qr.png" alt="BNB QR Code" class="qr-code" />
-      <button onclick="copyWallet()">📋 Copy Address</button>
-      <button onclick="connectAndSend()">🔌 Send BNB with MetaMask</button>
-    </div>
-
-    <div class="stats">
-      <p>Soft Cap: 50 BNB | Hard Cap: 200 BNB</p>
-      <p>Raised: <span id="fakeRaised">0</span> BNB</p>
-      <div class="progress">
-        <div class="progress-bar" id="progressBar"></div>
+      <div id="description">
+        DojoAI 2.0 is a revolutionary AI project integrating decentralized trading algorithms with blockchain automation. This presale offers early access to our native token before official exchange listings. All funds raised will go toward protocol development, strategic partnerships, and token liquidity. Investors will receive tokens after presale closure on August 1st. Don’t miss your chance to join the next-gen AI revolution.
       </div>
-    </div>
 
-    <div class="investors" id="investorList">
-      <!-- Fake investor updates appear here -->
-    </div>
+      <div id="countdown">Countdown Loading...</div>
 
-    <div class="contact">
-      Token distribution begins August 1st. For inquiries, DM us on X: <strong>@DojoAI 2.0 Presale</strong>
+      <div class="stats">
+        <p>Soft Cap: 50 BNB | Hard Cap: 200 BNB</p>
+        <p>Raised: <span id="fakeRaised">0</span> BNB</p>
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="investors" id="investorList"></div>
+
+      <div class="join-section">
+        <h3>Ready to Join?</h3>
+        <p>To participate in the presale and receive tokens, users must send BNB to the wallet below. Token distribution will be automatic after presale ends.</p>
+        <div class="wallet-address" id="walletAddress">0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918</div>
+        <img src="dojoai_bnb_qr.png" alt="BNB QR Code" class="qr-code" />
+        <button onclick="copyWallet()">📋 Copy Address</button>
+        <button onclick="connectAndSend()">🔌 Send BNB with MetaMask</button>
+      </div>
+
+      <div class="contact">
+        Token distribution begins August 1st. For inquiries, DM us on X: <strong>@DojoAI 2.0 Presale</strong><br />
+        View source code: <a href="https://github.com/dojoai-dev/dojoai-presale" target="_blank">GitHub Repo</a>
+      </div>
     </div>
   </div>
 
   <script>
-    const targetDate = new Date("2025-08-01T00:00:00Z").getTime();
+    const BIN_ID = "68726140765a380a7395fa54";
+    const API_KEY = "$2a$10$PrwJqaA0CInQDwUcVoukmesOKwbFkvrKvgbESnI82d0Ts4V/A/Xle";
+    const ENDPOINT = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
     const countdown = document.getElementById("countdown");
     const investorList = document.getElementById("investorList");
     const progressBar = document.getElementById("progressBar");
     const raisedDisplay = document.getElementById("fakeRaised");
 
-    let fakeRaised = parseFloat(localStorage.getItem("dojoai_fakeRaised")) || 0;
+    const targetDate = new Date("2025-08-01T00:00:00Z").getTime();
 
-    function updateProgressUI() {
-      raisedDisplay.innerText = fakeRaised.toFixed(2);
-      progressBar.style.width = (fakeRaised / 200) * 100 + "%";
-    }
-
-    updateProgressUI();
-
-    setInterval(() => {
+    function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
       if (distance <= 0) {
@@ -158,13 +179,37 @@
       const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const secs = Math.floor((distance % (1000 * 60)) / 1000);
       countdown.innerHTML = `⏳ ${days}d ${hours}h ${mins}m ${secs}s remaining`;
-    }, 1000);
+    }
+
+    async function fetchRaised() {
+      const res = await fetch(ENDPOINT + "/latest", {
+        headers: {
+          'X-Master-Key': API_KEY
+        }
+      });
+      const data = await res.json();
+      return parseFloat(data.record.raised || 0);
+    }
+
+    async function updateRaised(newValue) {
+      await fetch(ENDPOINT, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": API_KEY
+        },
+        body: JSON.stringify({ raised: newValue })
+      });
+    }
+
+    function updateProgressUI(raised) {
+      raisedDisplay.innerText = raised.toFixed(2);
+      progressBar.style.width = (raised / 200) * 100 + "%";
+    }
 
     function copyWallet() {
       const address = document.getElementById("walletAddress").innerText;
-      navigator.clipboard.writeText(address).then(() => {
-        alert("BNB Address copied!");
-      });
+      navigator.clipboard.writeText(address).then(() => alert("BNB Address copied!"));
     }
 
     async function connectAndSend() {
@@ -189,20 +234,32 @@
       }
     }
 
-    function randomInvestor() {
+    async function randomInvestor() {
       const address = "0x" + Math.random().toString(16).substr(2, 4) + "..." + Math.random().toString(16).substr(2, 4);
       const amount = (Math.random() * (1 - 0.01) + 0.01).toFixed(3);
-      fakeRaised += parseFloat(amount);
-      if (fakeRaised > 200) fakeRaised = 200;
-      localStorage.setItem("dojoai_fakeRaised", fakeRaised.toString());
-      updateProgressUI();
+      let raised = await fetchRaised();
+      raised += parseFloat(amount);
+      if (raised > 200) raised = 200;
+      await updateRaised(raised);
+      updateProgressUI(raised);
 
       const entry = document.createElement("div");
       entry.textContent = `${amount} BNB from ${address}`;
       investorList.prepend(entry);
     }
 
-    setInterval(randomInvestor, 15000);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    fetchRaised().then(updateProgressUI);
+
+    // Load presale content only after dummy login
+    document.querySelector(".login-register button:last-of-type").addEventListener("click", () => {
+      document.querySelector(".login-register").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    });
+
+    // Update fake investor every 90 seconds
+    setInterval(randomInvestor, 90000);
   </script>
 </body>
 </html>
