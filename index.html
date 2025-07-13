@@ -3,296 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to DojoAI Presale</title>
+  <title>DojoAI 2.0 Presale</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Rajdhani', sans-serif;
-      background-color: #0e0e0e;
-      color: #f0f0f0;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
       text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background: #00ffc3;
       padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav h2 {
+      color: #000;
+      margin: 0;
+    }
+    nav a {
+      color: #000;
+      font-weight: bold;
+      margin-left: 20px;
+      text-decoration: none;
     }
     .container {
-      max-width: 700px;
+      max-width: 800px;
       margin: auto;
-      padding: 30px;
-      background-color: #1a1a1a;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #00ffc3;
+      padding: 40px 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      margin-top: 30px;
     }
     h1 {
+      font-size: 2.5rem;
       color: #00ffc3;
-      font-weight: 700;
     }
-    #description {
-      font-size: 16px;
-      color: #bbb;
-      margin: 20px 0 30px;
+    p, .contact {
+      font-size: 1rem;
       line-height: 1.6;
     }
-    #countdown {
-      font-size: 24px;
-      margin: 20px 0;
-    }
-    .wallet-section, .login-register {
-      margin-top: 30px;
-    }
     .wallet-address {
-      background: #222;
-      padding: 10px;
-      border-radius: 8px;
-      margin: 10px 0;
-      word-break: break-all;
+      background: #111;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px auto;
+      word-break: break-word;
+      color: #0f0;
     }
     .qr-code {
-      margin-top: 10px;
       width: 150px;
+      margin-top: 10px;
     }
     button {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
       background: #00ffc3;
       color: #000;
-      padding: 10px 20px;
-      font-weight: bold;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
     }
-    input {
-      padding: 10px;
-      width: 90%;
-      border: none;
-      margin: 5px 0;
-      border-radius: 6px;
-    }
-    .stats {
-      margin-top: 30px;
-      font-size: 16px;
-      color: #aaa;
+    .progress-bar {
+      width: 0%;
+      height: 25px;
+      background: #00ffc3;
+      border-radius: 10px;
+      transition: width 1s ease-in-out;
     }
     .progress {
       background: #333;
-      border-radius: 10px;
       height: 25px;
-      margin-top: 10px;
+      border-radius: 10px;
       overflow: hidden;
+      margin: 20px 0;
     }
-    .progress-bar {
-      background: #00ffc3;
-      height: 100%;
-      width: 0%;
-      transition: width 1s ease;
+    .testimonial {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px 0;
+      font-style: italic;
     }
-    .investors {
-      text-align: left;
-      margin-top: 30px;
-      font-size: 14px;
-      color: #ccc;
-      height: 120px;
-      overflow-y: auto;
-      background: #111;
-      padding: 10px;
-      border-radius: 8px;
-    }
-    .join-section {
+    .testimonials {
       margin-top: 30px;
     }
-    .contact {
-      margin-top: 30px;
-      font-size: 15px;
-      color: #aaa;
-    }
-    a {
-      color: #00ffc3;
-    }
-    .balance-display, .token-claim {
-      margin-top: 20px;
-      font-size: 15px;
-      color: #0f0;
+    img.banner {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
+  <nav>
+    <h2>DojoAI 2.0</h2>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
   <div class="container">
-    <h1>👋 Welcome to DojoAI Presale</h1>
-    <div class="login-register">
-      <h3>Login or Create Your Account to Continue</h3>
-      <input type="text" id="username" placeholder="Username" /><br />
-      <input type="password" id="password" placeholder="Password" /><br />
-      <button onclick="login()">Login</button>
-      <button onclick="register()">Register</button>
+    <img src="dojo-coin-banner.jpg" alt="Dojo Coin Banner" class="banner" />
+    <h1>🚀 DojoAI 2.0 Presale</h1>
+    <p>
+      DojoAI 2.0 is a revolutionary AI-driven crypto token powering smart blockchain trading automation. Join our presale and be part of something massive. Token distribution starts August 1st based on BNB contributed.
+    </p>
+    <p><strong>Price:</strong> 1 DOJOAI = 0.0002 BNB (~$0.14 USD)<br>
+    Minimum Contribution: 0.01 BNB | Maximum: 5 BNB per wallet</p>
+
+    <div class="wallet-address">0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918</div>
+    <img src="dojoai_bnb_qr.png" alt="BNB QR Code" class="qr-code" />
+    <button onclick="copyWallet()">📋 Copy Wallet</button>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p>Raised: <span id="fakeRaised">0</span> BNB | Target: 200 BNB</p>
+
+    <div class="testimonials">
+      <div class="testimonial">"Been holding since day one! DojoAI to the moon! 🚀" – @CryptoKing</div>
+      <div class="testimonial">"Finally, a presale that feels legit. Excited to see what's next!" – @Web3Genius</div>
+      <div class="testimonial">"This team is going to break barriers in crypto! Let's go!" – @DojoWhale</div>
+      <div class="testimonial">"Missed $DOGE, missed $SHIB, not missing $DOJO!" – @MoonSniper</div>
+      <div class="testimonial">"Already sent 0.5 BNB, expecting x100 returns!" – @RiskTakerEth</div>
     </div>
 
-    <div class="container" id="mainContent" style="display: none;">
-      <h1>🚀 DojoAI 2.0 Presale</h1>
-      <div id="description">
-        DojoAI 2.0 is a revolutionary AI project integrating decentralized trading algorithms with blockchain automation. This presale offers early access to our native token before official exchange listings. All funds raised go toward protocol development, strategic partnerships, and liquidity. Token claims will be available after the presale ends on August 1st based on BNB contributed.
-      </div>
-
-      <div id="countdown">Countdown Loading...</div>
-
-      <div class="stats">
-        <p>Soft Cap: 50 BNB | Hard Cap: 200 BNB</p>
-        <p>Raised: <span id="fakeRaised">0</span> BNB</p>
-        <div class="progress">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-      </div>
-
-      <div class="balance-display">
-        Your Contribution: <span id="userBNB">0.000</span> BNB<br />
-        Estimated Token Allocation: <span id="userDOJO">0</span> DOJO
-      </div>
-
-      <div class="investors" id="investorList"></div>
-
-      <div class="join-section">
-        <h3>Ready to Join?</h3>
-        <p>Send BNB to the wallet below. Token claims will be unlocked on August 1st based on your BNB sent.</p>
-        <div class="wallet-address" id="walletAddress">0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918</div>
-        <img src="dojoai_bnb_qr.png" alt="BNB QR Code" class="qr-code" />
-        <button onclick="copyWallet()">📋 Copy Address</button>
-        <button onclick="connectAndSend()">🔌 Send BNB with MetaMask</button>
-      </div>
-
-      <div class="token-claim">
-        <button disabled>Claim DOJO Tokens (Opens Aug 1)</button>
-      </div>
-
-      <div class="contact">
-        Token distribution begins August 1st. For inquiries, DM us on X: <strong>@DojoAI 2.0 Presale</strong><br />
-        View source code: <a href="https://github.com/dojoai-dev/dojoai-presale" target="_blank">GitHub Repo</a>
-      </div>
+    <div class="contact" id="contact">
+      📅 Token distribution begins August 1st.<br />
+      📩 DM us on X: <strong>@DojoAI 2.0 Presale</strong><br />
+      💻 View source code: <a href="https://github.com/dojoai-dev/dojoai-presale" target="_blank">GitHub Repo</a>
     </div>
   </div>
 
   <script>
-    const BIN_ID = "68726140765a380a7395fa54";
-    const API_KEY = "$2a$10$PrwJqaA0CInQDwUcVoukmesOKwbFkvrKvgbESnI82d0Ts4V/A/Xle";
-    const ENDPOINT = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
-    const countdown = document.getElementById("countdown");
-    const investorList = document.getElementById("investorList");
-    const progressBar = document.getElementById("progressBar");
-    const raisedDisplay = document.getElementById("fakeRaised");
-    const userBNB = document.getElementById("userBNB");
-    const userDOJO = document.getElementById("userDOJO");
-
-    const targetDate = new Date("2025-08-01T00:00:00Z").getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = targetDate - now;
-      if (distance <= 0) {
-        countdown.innerHTML = "⛔️ Presale Ended";
-        return;
-      }
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((distance % (1000 * 60)) / 1000);
-      countdown.innerHTML = `⏳ ${days}d ${hours}h ${mins}m ${secs}s remaining`;
+    let raised = 0;
+    function simulateContributions() {
+      raised += (Math.random() * 1.2).toFixed(3);
+      document.getElementById("fakeRaised").innerText = parseFloat(raised).toFixed(3);
+      document.getElementById("progressBar").style.width = (raised / 2) + "%";
     }
-
-    async function fetchRaised() {
-      const res = await fetch(ENDPOINT + "/latest", {
-        headers: { 'X-Master-Key': API_KEY }
-      });
-      const data = await res.json();
-      return parseFloat(data.record.raised || 0);
-    }
-
-    async function updateRaised(newValue) {
-      await fetch(ENDPOINT, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Master-Key": API_KEY
-        },
-        body: JSON.stringify({ raised: newValue })
-      });
-    }
-
-    function updateProgressUI(raised) {
-      raisedDisplay.innerText = raised.toFixed(2);
-      progressBar.style.width = (raised / 200) * 100 + "%";
-    }
+    setInterval(simulateContributions, 300000); // update every 5 minutes
 
     function copyWallet() {
-      const address = document.getElementById("walletAddress").innerText;
-      navigator.clipboard.writeText(address).then(() => alert("BNB Address copied!"));
+      navigator.clipboard.writeText("0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918")
+        .then(() => alert("✅ Wallet address copied!"))
+        .catch(() => alert("❌ Failed to copy wallet address."));
     }
-
-    async function connectAndSend() {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const from = accounts[0];
-          const tx = await window.ethereum.request({
-            method: 'eth_sendTransaction',
-            params: [{
-              from,
-              to: "0x2Eb0b86bA0a09A04BE034150b3ad3A306D847918",
-              value: "0x2386F26FC10000"
-            }]
-          });
-          const userAmount = parseFloat(localStorage.getItem("contribution") || 0) + 0.01;
-          localStorage.setItem("contribution", userAmount);
-          updateUserStats(userAmount);
-          alert("Transaction sent: " + tx);
-        } catch (err) {
-          alert("Error: " + err.message);
-        }
-      } else {
-        alert("MetaMask not detected.");
-      }
-    }
-
-    function updateUserStats(bnb) {
-      userBNB.innerText = bnb.toFixed(3);
-      userDOJO.innerText = Math.floor(bnb * 1000);
-    }
-
-    async function randomInvestor() {
-      const address = "0x" + Math.random().toString(16).substr(2, 4) + "..." + Math.random().toString(16).substr(2, 4);
-      const amount = (Math.random() * (1 - 0.01) + 0.01).toFixed(3);
-      let raised = await fetchRaised();
-      raised += parseFloat(amount);
-      if (raised > 200) raised = 200;
-      await updateRaised(raised);
-      updateProgressUI(raised);
-      const entry = document.createElement("div");
-      entry.textContent = `${amount} BNB from ${address}`;
-      investorList.prepend(entry);
-    }
-
-    function login() {
-      const u = document.getElementById("username").value;
-      const p = document.getElementById("password").value;
-      const users = JSON.parse(localStorage.getItem("users") || "{}");
-      if (!users[u]) return alert("❌ Username not found.");
-      if (users[u] !== p) return alert("🔐 Incorrect password.");
-      document.querySelector(".login-register").style.display = "none";
-      document.getElementById("mainContent").style.display = "block";
-      const contribution = parseFloat(localStorage.getItem("contribution") || 0);
-      updateUserStats(contribution);
-    }
-
-    function register() {
-      const u = document.getElementById("username").value;
-      const p = document.getElementById("password").value;
-      const users = JSON.parse(localStorage.getItem("users") || "{}");
-      if (users[u]) return alert("⚠️ Username already exists.");
-      users[u] = p;
-      localStorage.setItem("users", JSON.stringify(users));
-      alert("✅ Registration successful. You may now log in.");
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    fetchRaised().then(updateProgressUI);
-    setInterval(randomInvestor, 90000);
   </script>
 </body>
 </html>
